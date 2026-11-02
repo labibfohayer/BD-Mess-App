@@ -1,0 +1,6 @@
+{
+  "name": "BD Mess",
+  "description": "Smart Bangladeshi Mess Management App with Meal, Rent, Bazar & Maid Tracker",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

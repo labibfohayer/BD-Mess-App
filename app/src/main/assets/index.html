@@ -1,0 +1,2548 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BD Mess - Smart Mess Management System</title>
+  <!-- Google Fonts: Inter, Hind Siliguri, and Material Symbols for Clean Minimalism aesthetic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --font-family: 'Hind Siliguri', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      /* Clean Minimalism Palette */
+      --primary: #0d9488;
+      --primary-dark: #0f766e;
+      --primary-light: #f0fdfa;
+      --primary-soft: #ccfbf1;
+      --accent-orange: #f97316;
+      --accent-orange-light: #fff7ed;
+      --accent-orange-soft: #ffedd5;
+      --pastel-green: #10b981;
+      --pastel-green-light: #ecfdf5;
+      --pastel-purple: #9333ea;
+      --pastel-purple-light: #faf5ff;
+      --danger: #ef4444;
+      --danger-light: #fef2f2;
+      --warning: #f59e0b;
+      --warning-light: #fffbeb;
+      --bg-page: #fcfcfc;
+      --bg-card: #ffffff;
+      --bg-card-subtle: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --border-color: #f1f5f9;
+      --border-subtle: #e2e8f0;
+      --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+      --shadow-header: 0 10px 25px -5px rgba(13, 148, 136, 0.25);
+      --header-bg: #0d9488;
+      --radius-xs: 8px;
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 20px;
+      --radius-xl: 24px;
+      --radius-2xl: 28px;
+      --radius-full: 9999px;
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="dark"] {
+      --primary: #14b8a6;
+      --primary-dark: #0d9488;
+      --primary-light: rgba(20, 184, 166, 0.12);
+      --primary-soft: rgba(20, 184, 166, 0.2);
+      --accent-orange: #fb923c;
+      --accent-orange-light: rgba(251, 146, 60, 0.12);
+      --accent-orange-soft: rgba(251, 146, 60, 0.2);
+      --pastel-green: #34d399;
+      --pastel-green-light: rgba(52, 211, 153, 0.12);
+      --pastel-purple: #c084fc;
+      --pastel-purple-light: rgba(192, 132, 252, 0.12);
+      --danger: #f87171;
+      --danger-light: rgba(248, 113, 113, 0.12);
+      --warning: #fbbf24;
+      --warning-light: rgba(251, 191, 36, 0.12);
+      --bg-page: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-subtle: #162032;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-light: #64748b;
+      --border-color: #334155;
+      --border-subtle: #1e293b;
+      --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+      --shadow-header: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+      --header-bg: #134e4a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-family);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      padding-bottom: 96px;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* Clean Scrollbar */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Container */
+    .app-container {
+      width: 100%;
+      max-width: 768px;
+      margin: 0 auto;
+      padding: 0 14px;
+    }
+
+    /* Clean Minimalist Header */
+    .app-header {
+      background: var(--header-bg);
+      color: #ffffff;
+      padding: 16px 14px 22px;
+      border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+      box-shadow: var(--shadow-header);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      transition: var(--transition);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 500;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pill-btn {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+    }
+
+    .pill-btn:active {
+      transform: scale(0.95);
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .header-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.12);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      font-size: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .dynamic-date {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+
+    .live-clock {
+      background: var(--accent-orange);
+      color: #ffffff;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* Manager Quick Pay Section */
+    .manager-bar {
+      margin-top: -12px;
+      margin-bottom: 16px;
+    }
+
+    .manager-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .manager-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .manager-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mfs-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mfs-badge {
+      flex: 1;
+      min-width: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .mfs-bkash {
+      border-left: 4px solid #e2136e;
+    }
+
+    .mfs-nagad {
+      border-left: 4px solid #f7941d;
+    }
+
+    .copy-btn {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid rgba(13, 148, 136, 0.15);
+      padding: 4px 10px;
+      border-radius: var(--radius-xs);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: var(--transition);
+    }
+
+    .copy-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* Clean Tab Navigation Bar */
+    .tab-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 0 14px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      flex-shrink: 0;
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .tab-btn:active {
+      transform: scale(0.96);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+    }
+
+    /* Live Summary Cards (Clean Minimalist Grid) */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: 600px) {
+      .summary-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-xs);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .stat-card:active {
+      background: var(--bg-card-subtle);
+    }
+
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--primary);
+    }
+
+    .stat-card.orange::after { background: var(--accent-orange); }
+    .stat-card.green::after { background: var(--pastel-green); }
+    .stat-card.blue::after { background: #3b82f6; }
+    .stat-card.purple::after { background: var(--pastel-purple); }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .stat-card.green .stat-value { color: var(--primary); }
+    .stat-card.orange .stat-value { color: var(--accent-orange); }
+
+    .stat-sub {
+      font-size: 10px;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-xs);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .section-icon {
+      color: var(--primary);
+    }
+
+    /* Notification Alert Box (Clean Minimalist Banner) */
+    .alert-banner {
+      background: rgba(13, 148, 136, 0.06);
+      border: 1px solid rgba(13, 148, 136, 0.16);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    [data-theme="dark"] .alert-banner {
+      background: rgba(20, 184, 166, 0.08);
+      border-color: rgba(20, 184, 166, 0.25);
+    }
+
+    .alert-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .alert-tag {
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .alert-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .alert-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .alert-subtext {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .btn-sms {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(13, 148, 136, 0.2);
+      transition: var(--transition);
+    }
+
+    .btn-sms:active {
+      transform: scale(0.95);
+      opacity: 0.9;
+    }
+
+    /* Forms and Inputs */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 500px) {
+      .form-grid.two-cols {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    /* Action Buttons */
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 11px 18px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+      box-shadow: 0 2px 8px rgba(13, 148, 136, 0.2);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.96);
+      opacity: 0.9;
+    }
+
+    .btn-accent {
+      background: var(--accent-orange);
+      color: #ffffff;
+      border: none;
+      padding: 11px 18px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+      box-shadow: 0 2px 8px rgba(249, 115, 22, 0.2);
+    }
+
+    .btn-accent:active {
+      transform: scale(0.96);
+      opacity: 0.9;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+
+    .btn-outline:active {
+      transform: scale(0.96);
+      background: var(--primary-light);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: var(--radius-xs);
+    }
+
+    /* Quick Action Grid (Memo & Quick Pay) */
+    .quick-action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+      margin-bottom: 20px;
+    }
+
+    .btn-quick-memo {
+      background: #0f172a;
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-lg);
+      padding: 13px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-quick-memo:active {
+      transform: scale(0.96);
+    }
+
+    [data-theme="dark"] .btn-quick-memo {
+      background: #334155;
+    }
+
+    .btn-quick-pay {
+      background: var(--accent-orange);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-lg);
+      padding: 13px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(249, 115, 22, 0.25);
+    }
+
+    .btn-quick-pay:active {
+      transform: scale(0.96);
+    }
+
+    /* Member Meal Table & Cards */
+    .member-meal-card {
+      background: var(--bg-card-subtle);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      padding: 14px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: var(--transition);
+    }
+
+    .member-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .member-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .member-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-full);
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      border: 1.5px solid var(--primary);
+    }
+
+    .member-name {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .member-phone {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .meal-counter-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      background: var(--bg-card);
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+    }
+
+    .meal-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .meal-slot-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .counter-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-counter {
+      width: 26px;
+      height: 26px;
+      border-radius: var(--radius-xs);
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid rgba(13, 148, 136, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      user-select: none;
+      transition: var(--transition);
+    }
+
+    .btn-counter:active {
+      transform: scale(0.88);
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .meal-count-display {
+      min-width: 22px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* Bill & Due Breakdown Cards */
+    .bill-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card-subtle);
+      margin-bottom: 8px;
+      border: 1px solid var(--border-color);
+      font-size: 13px;
+    }
+
+    .due-badge {
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .due-badge.due {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    .due-badge.advance {
+      background: var(--pastel-green-light);
+      color: var(--pastel-green);
+    }
+
+    /* Emergency Swap Banner */
+    .swap-card {
+      border-left: 4px solid var(--accent-orange);
+      background: var(--bg-card-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Maid Attendance Badge */
+    .attendance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .day-box {
+      aspect-ratio: 1;
+      border-radius: var(--radius-xs);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      background: var(--bg-card-subtle);
+      transition: var(--transition);
+    }
+
+    .day-box:active {
+      transform: scale(0.92);
+    }
+
+    .day-box.present {
+      background: var(--pastel-green);
+      color: #ffffff;
+      border-color: var(--pastel-green);
+    }
+
+    .day-box.absent {
+      background: var(--danger);
+      color: #ffffff;
+      border-color: var(--danger);
+    }
+
+    .day-box.today {
+      box-shadow: 0 0 0 2px var(--accent-orange);
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 84px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .toast {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      animation: slideUp 0.3s ease forwards;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Memo Preview Box */
+    .memo-box {
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 12px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      white-space: pre-wrap;
+      max-height: 320px;
+      overflow-y: auto;
+      border: 1px solid #334155;
+      margin: 14px 0;
+      line-height: 1.6;
+    }
+
+    /* Modal / Dialog */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      width: 100%;
+      max-width: 480px;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Clean Bottom Navigation Bar */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+      padding: 8px 16px 12px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+      z-index: 60;
+    }
+
+    .bottom-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-muted);
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .bottom-nav-item.active {
+      color: var(--primary);
+    }
+
+    .bottom-nav-item:active {
+      transform: scale(0.9);
+    }
+
+    .bottom-nav-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 2px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Custom SVG & Material Symbols Helper */
+    .icon {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      stroke-width: 2;
+      stroke: currentColor;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vertical-align: middle;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+      display: inline-block;
+      font-size: 20px;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="app-container">
+      <div class="header-top">
+        <div class="brand-logo">
+          <div class="logo-icon">
+            <span class="material-symbols-outlined" style="font-size:22px;">apartment</span>
+          </div>
+          <div>
+            <div class="brand-title">BD Mess</div>
+            <div class="brand-subtitle" id="txt-app-tagline">স্মার্ট মেস ম্যানেজার ও অটো নোটিফিকেশন</div>
+          </div>
+        </div>
+
+        <div class="header-controls">
+          <!-- Language Switcher -->
+          <button class="pill-btn" id="lang-btn" onclick="toggleLanguage()">
+            <span class="material-symbols-outlined" style="font-size:16px;">language</span>
+            <span id="lang-label">BN | EN</span>
+          </button>
+
+          <!-- Light/Dark Mode Switcher -->
+          <button class="pill-btn" id="theme-btn" onclick="toggleTheme()">
+            <span id="theme-icon">🌙</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="header-bottom">
+        <div class="dynamic-date">
+          <span class="material-symbols-outlined" style="font-size:16px; opacity:0.9;">calendar_today</span>
+          <span id="live-bd-date">২৬ আগস্ট, ২০২৬</span>
+        </div>
+        <div class="live-clock" id="live-bd-time">০৭:০০ PM</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="app-container" style="margin-top: 14px;">
+
+    <!-- Section 3: Manager Quick Pay & Number Copy -->
+    <div class="manager-bar">
+      <div class="manager-card">
+        <div class="manager-header">
+          <div class="manager-title">
+            <span class="material-symbols-outlined" style="color:var(--accent-orange);">account_balance_wallet</span>
+            <span id="txt-mgr-pay">মেস ম্যানেজার কুইক পে (bKash/Nagad)</span>
+          </div>
+          <button class="btn-outline btn-sm" onclick="openPaymentModal()">
+            <span class="material-symbols-outlined" style="font-size:16px;">add</span>
+            <span id="txt-add-pay-btn">টাকা জমা দিন</span>
+          </button>
+        </div>
+
+        <div class="mfs-badges">
+          <div class="mfs-badge mfs-bkash">
+            <div>
+              <div style="font-size:10px; color:#e2136e; font-weight:800; letter-spacing:0.3px;">bKash Personal</div>
+              <div id="disp-bkash-no" style="letter-spacing:0.5px; font-family:monospace; font-size:13px; font-weight:700;">01711223344</div>
+            </div>
+            <button class="copy-btn" onclick="copyNumber('bkash')">
+              <span class="material-symbols-outlined" style="font-size:14px;">content_copy</span>
+              <span id="txt-copy-1">কপি</span>
+            </button>
+          </div>
+
+          <div class="mfs-badge mfs-nagad">
+            <div>
+              <div style="font-size:10px; color:#f7941d; font-weight:800; letter-spacing:0.3px;">Nagad Personal</div>
+              <div id="disp-nagad-no" style="letter-spacing:0.5px; font-family:monospace; font-size:13px; font-weight:700;">01911223344</div>
+            </div>
+            <button class="copy-btn" onclick="copyNumber('nagad')">
+              <span class="material-symbols-outlined" style="font-size:14px;">content_copy</span>
+              <span id="txt-copy-2">কপি</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Auto Night (9 PM) & Morning (7 AM) Bazar Alert Banner -->
+    <div class="alert-banner" id="bazar-alert-box">
+      <div class="alert-header">
+        <span class="alert-tag" id="alert-schedule-tag">⏰ রোটেশন শিডিউল</span>
+        <span style="font-size: 11px; font-weight:600;" id="alert-time-status">রাত ৯:০০ ও সকাল ৭:০০ অটো অ্যালার্ট</span>
+      </div>
+      <div class="alert-body">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:34px; height:34px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center;">
+            <span class="material-symbols-outlined" style="font-size:18px;">notifications_active</span>
+          </div>
+          <div>
+            <div class="alert-text" id="alert-main-msg">⚠️ আগামীকাল বাজার করার পালা: <span id="bazar-person-name" style="color:var(--accent-orange); font-weight:800;">তানভীর আহমেদ</span></div>
+            <div class="alert-subtext" id="alert-sub-msg">তারিখ: ২৭ আগস্ট | ফোন: <span id="bazar-person-phone">01700112233</span></div>
+          </div>
+        </div>
+        <button class="btn-sms" onclick="sendBazarSMS()">
+          <span class="material-symbols-outlined" style="font-size:16px;">sms</span>
+          <span id="txt-send-sms">SMS পাঠান</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Section Tabs Navigation -->
+    <nav class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab('dashboard')">
+        <span class="material-symbols-outlined" style="font-size:18px;">grid_view</span>
+        <span id="tab-t-dash">ড্যাশবোর্ড ও মিল</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('rent')">
+        <span class="material-symbols-outlined" style="font-size:18px;">calculate</span>
+        <span id="tab-t-rent">বাসা ভাড়া ও বিল</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('bazar')">
+        <span class="material-symbols-outlined" style="font-size:18px;">restaurant_menu</span>
+        <span id="tab-t-bazar">বাজার খরচ</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('swap')">
+        <span class="material-symbols-outlined" style="font-size:18px;">swap_horiz</span>
+        <span id="tab-t-swap">জরুরি সোয়াপ</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('maid')">
+        <span class="material-symbols-outlined" style="font-size:18px;">cleaning_services</span>
+        <span id="tab-t-maid">বুয়া হাজিরা</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('memo')">
+        <span class="material-symbols-outlined" style="font-size:18px;">receipt_long</span>
+        <span id="tab-t-memo">ফাইনাল মেমো</span>
+      </button>
+    </nav>
+
+    <!-- TAB 1: Live Meal Dashboard & Summary -->
+    <div id="tab-dashboard" class="tab-content">
+      
+      <!-- Live Summary Grid (Clean Minimalism Style) -->
+      <div class="summary-grid">
+        <div class="stat-card green">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+            <div class="stat-label" id="txt-stat-rate">মিল রেট</div>
+            <span class="material-symbols-outlined" style="color:var(--primary); font-size:18px;">restaurant</span>
+          </div>
+          <div>
+            <div class="stat-value" id="stat-meal-rate">৳ ৫০.০০</div>
+            <div class="stat-sub" id="txt-stat-rate-sub">মোট খরচ ÷ মোট মিল</div>
+          </div>
+        </div>
+        <div class="stat-card orange">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+            <div class="stat-label" id="txt-stat-bazar">বাজার খরচ</div>
+            <span class="material-symbols-outlined" style="color:var(--accent-orange); font-size:18px;">shopping_cart</span>
+          </div>
+          <div>
+            <div class="stat-value" id="stat-total-bazar">৳ ৮,২৫০</div>
+            <div class="stat-sub" id="txt-stat-bazar-sub">চলতি মাস</div>
+          </div>
+        </div>
+        <div class="stat-card blue">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+            <div class="stat-label" id="txt-stat-meals">মোট মিল</div>
+            <span class="material-symbols-outlined" style="color:#3b82f6; font-size:18px;">analytics</span>
+          </div>
+          <div>
+            <div class="stat-value" id="stat-total-meals">১৬৫ টি</div>
+            <div class="stat-sub" id="txt-stat-meals-sub">সকল মেম্বার মিলিয়ে</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+            <div class="stat-label" id="txt-stat-head-rent">মাথাপিছু ভাড়া</div>
+            <span class="material-symbols-outlined" style="color:var(--text-muted); font-size:18px;">home</span>
+          </div>
+          <div>
+            <div class="stat-value" id="stat-per-head-rent">৳ ৩,৬৫০</div>
+            <div class="stat-sub" id="txt-stat-head-rent-sub">ভাড়া + সকল বিল</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons (Memo & Quick Pay) -->
+      <div class="quick-action-grid">
+        <button class="btn-quick-memo" onclick="switchTab('memo')">
+          <span class="material-symbols-outlined" style="font-size:20px;">receipt_long</span>
+          <span>মেমো তৈরি</span>
+        </button>
+        <button class="btn-quick-pay" onclick="openPaymentModal()">
+          <span class="material-symbols-outlined" style="font-size:20px;">bolt</span>
+          <span>কুইক পে (বিকাশ)</span>
+        </button>
+      </div>
+
+      <!-- Section 4: Live Meal Tracker (Morning, Lunch, Dinner) -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="material-symbols-outlined section-icon">restaurant_menu</span>
+            <span id="txt-meal-tracker-title">দৈনিক মিল ট্র্যাকার (সকাল, দুপুর, রাত)</span>
+          </div>
+          <button class="btn-primary btn-sm" onclick="openAddMemberModal()">
+            <span class="material-symbols-outlined" style="font-size:16px;">person_add</span>
+            <span id="txt-add-member-btn">+ মেম্বার যোগ</span>
+          </button>
+        </div>
+
+        <div id="members-meal-list">
+          <!-- Member items dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Section 5: Smart Due / Advance & WhatsApp Reminder -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="material-symbols-outlined section-icon">account_balance</span>
+            <span id="txt-due-title">মেম্বার ডিউ / অ্যাডভান্স ব্যালেন্স (বাসা ভাড়াসহ)</span>
+          </div>
+          <span style="font-size: 11px; color:var(--text-muted);" id="txt-due-subtitle">১-ক্লিকে রিমাইন্ডার পাঠান</span>
+        </div>
+
+        <div id="due-balance-list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB 2: Rent & Utility Bills Divider -->
+    <div id="tab-rent" class="tab-content" style="display:none;">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title">
+            <svg class="icon section-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span id="txt-rent-calc-title">বাসা ভাড়া ও ইউটিলিটি বিল ডিভাইডার</span>
+          </div>
+        </div>
+
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;" id="txt-rent-desc">
+          মোট বাসা ভাড়া এবং অন্যান্য বিলসমূহ ইনপুট দিন। অ্যাপ স্বয়ংক্রিয়ভাবে মোট মেম্বার দিয়ে ভাগ করে মাথাপিছু ভাড়া মেমোতে যুক্ত করবে।
+        </p>
+
+        <div class="form-grid two-cols">
+          <div class="form-group">
+            <label class="form-label" id="lbl-main-rent">মূল বাসা ভাড়া (৳)</label>
+            <input type="number" class="form-input" id="input-house-rent" value="20000" oninput="calculateRentAndBills()">
+          </div>
+          <div class="form-group">
+            <label class="form-label" id="lbl-elect-bill">বিদ্যুৎ বিল (৳)</label>
+            <input type="number" class="form-input" id="input-elec-bill" value="1800" oninput="calculateRentAndBills()">
+          </div>
+          <div class="form-group">
+            <label class="form-label" id="lbl-gas-bill">গ্যাস বিল (৳)</label>
+            <input type="number" class="form-input" id="input-gas-bill" value="1080" oninput="calculateRentAndBills()">
+          </div>
+          <div class="form-group">
+            <label class="form-label" id="lbl-water-bill">পানি ও ময়লা বিল (৳)</label>
+            <input type="number" class="form-input" id="input-water-bill" value="600" oninput="calculateRentAndBills()">
+          </div>
+          <div class="form-group">
+            <label class="form-label" id="lbl-wifi-bill">ইন্টারনেট / WiFi বিল (৳)</label>
+            <input type="number" class="form-input" id="input-wifi-bill" value="1000" oninput="calculateRentAndBills()">
+          </div>
+          <div class="form-group">
+            <label class="form-label" id="lbl-other-bill">অন্যান্য চার্জ / পেপার বিল (৳)</label>
+            <input type="number" class="form-input" id="input-other-bill" value="500" oninput="calculateRentAndBills()">
+          </div>
+        </div>
+
+        <!-- Rent Calculation Result Box -->
+        <div style="background: var(--bg-card-subtle); border-radius: var(--radius-md); padding: 14px; margin-top: 16px; border: 1px dashed var(--primary);">
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+            <span style="font-size:13px; color:var(--text-muted);" id="txt-calc-tot-rent">সর্বমোট বাসা খরচ (ভাড়া + বিল):</span>
+            <span style="font-size:15px; font-weight:800; color:var(--primary);" id="disp-total-rent-all">৳ ২৪,৯৮০</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+            <span style="font-size:13px; color:var(--text-muted);" id="txt-calc-mem-count">মোট মেস মেম্বার সংখ্যা:</span>
+            <span style="font-size:14px; font-weight:700;" id="disp-total-members-count">৬ জন</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding-top:8px; border-top:1px solid var(--border-color);">
+            <span style="font-size:14px; font-weight:800; color:var(--accent-orange);" id="txt-calc-per-head">মাথাপিছু বাসা ভাড়া (Per Head):</span>
+            <span style="font-size:17px; font-weight:800; color:var(--accent-orange);" id="disp-per-head-rent-calc">৳ ৪,১৬৩</span>
+          </div>
+        </div>
+
+        <button class="btn-primary" style="width: 100%; margin-top: 14px;" onclick="saveRentSettings()">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+          <span id="txt-save-rent-btn">ভাড়া সেভ ও মেমোতে আপডেট করুন</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 3: Bazar Expenses Diary -->
+    <div id="tab-bazar" class="tab-content" style="display:none;">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title">
+            <svg class="icon section-icon" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            <span id="txt-add-bazar-title">নতুন বাজার খরচ এন্ট্রি</span>
+          </div>
+        </div>
+
+        <form id="form-bazar-entry" onsubmit="addBazarExpense(event)">
+          <div class="form-grid two-cols">
+            <div class="form-group">
+              <label class="form-label" id="lbl-bazar-member">বাজারকারী মেম্বার</label>
+              <select class="form-select" id="bazar-member-select" required>
+                <!-- populated dynamically -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lbl-bazar-amount">বাজারের পরিমাণ (৳)</label>
+              <input type="number" class="form-input" id="bazar-amount-input" placeholder="যেমন: ১৫০০" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lbl-bazar-date">তারিখ</label>
+              <input type="date" class="form-input" id="bazar-date-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lbl-bazar-items">বাজারের বিবরণ (আইটেমসমূহ)</label>
+              <input type="text" class="form-input" id="bazar-items-input" placeholder="চাল, ডাল, তেল, মুরগি, সবজি...">
+            </div>
+          </div>
+
+          <button type="submit" class="btn-accent" style="width: 100%; margin-top: 14px;">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span id="txt-bazar-submit-btn">বাজার খরচ যোগ করুন</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Bazar History Table -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title">
+            <svg class="icon section-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <span id="txt-bazar-history-title">বাজার খরচের হিস্ট্রি ডায়েরি</span>
+          </div>
+          <span style="font-size:12px; font-weight:700; color:var(--primary);" id="disp-bazar-count">৬টি এন্ট্রি</span>
+        </div>
+
+        <div id="bazar-history-list">
+          <!-- Dynamic Items -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: Emergency Bazar Swap System -->
+    <div id="tab-swap" class="tab-content" style="display:none;">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title">
+            <svg class="icon section-icon" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+            <span id="txt-swap-title">জরুরি বাজার সোয়াপ রিকোয়েস্ট (Emergency Swap)</span>
+          </div>
+        </div>
+
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;" id="txt-swap-desc">
+          পরীক্ষা, অসুস্থতা বা জরুরি প্রয়োজনে আপনার বাজার করার দিন অন্য কোনো মেম্বারের সাথে পরিবর্তন করতে পারবেন।
+        </p>
+
+        <form id="form-swap-request" onsubmit="submitSwapRequest(event)">
+          <div class="form-grid two-cols">
+            <div class="form-group">
+              <label class="form-label" id="lbl-swap-from">যার বাজার পরিবর্তন হবে (আবেদনকারী)</label>
+              <select class="form-select" id="swap-from-member" required>
+                <!-- populated dynamically -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lbl-swap-to">যার সাথে সোয়াপ করতে চান (সঙ্গী)</label>
+              <select class="form-select" id="swap-to-member" required>
+                <!-- populated dynamically -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lbl-swap-reason">সোয়াপের কারণ</label>
+              <select class="form-select" id="swap-reason-select">
+                <option value="exam">ইউনিভার্সিটি পরীক্ষা (Exam / Quiz)</option>
+                <option value="office">জরুরি অফিস / প্রজেক্টের চাপ</option>
+                <option value="sickness">অসুস্থতা / শারীরিক সমস্যা</option>
+                <option value="travel">জরুরি বাড়ি গমন / ভ্রমণ</option>
+                <option value="other">অন্যান্য জরুরি কাজ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lbl-swap-date">প্রস্তাবিত সোয়াপের তারিখ</label>
+              <input type="date" class="form-input" id="swap-date-input" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-accent" style="width: 100%; margin-top: 14px;">
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+            <span id="txt-swap-submit-btn">সোয়াপ রিকোয়েস্ট পাঠান ও আপডেট করুন</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Active Swaps List -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title">
+            <svg class="icon section-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span id="txt-active-swaps-title">সাম্প্রতিক সোয়াপ হিস্ট্রি ও স্ট্যাটাস</span>
+          </div>
+        </div>
+        <div id="swap-history-list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: Maid Salary & Attendance Module -->
+    <div id="tab-maid" class="tab-content" style="display:none;">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title">
+            <svg class="icon section-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span id="txt-maid-title">কাজের বুয়া / মেড স্যালারি ও হাজিরা মডিউল</span>
+          </div>
+        </div>
+
+        <div class="form-grid two-cols" style="margin-bottom: 14px;">
+          <div class="form-group">
+            <label class="form-label" id="lbl-maid-name">বুয়ার নাম</label>
+            <input type="text" class="form-input" id="input-maid-name" value="রাশিদা খালা">
+          </div>
+          <div class="form-group">
+            <label class="form-label" id="lbl-maid-salary">মাসিক মোট বেতন (৳)</label>
+            <input type="number" class="form-input" id="input-maid-salary" value="3500" oninput="updateMaidSummary()">
+          </div>
+        </div>
+
+        <!-- Maid Quick Stat -->
+        <div class="summary-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 14px;">
+          <div class="stat-card green">
+            <div class="stat-label" id="txt-maid-pres">উপস্থিত দিন</div>
+            <div class="stat-value" id="maid-present-count">২২ দিন</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label" id="txt-maid-abs">অনুপস্থিত (ছুটি)</div>
+            <div class="stat-value" style="color:var(--danger);" id="maid-absent-count">৪ দিন</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-label" id="txt-maid-net">প্রদেয় বেতন</div>
+            <div class="stat-value" id="maid-payable-salary">৳ ৩,৫০০</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 12px;">
+          <div style="font-size:13px; font-weight:700; margin-bottom:6px;" id="txt-maid-cal-title">চলতি মাসের দৈনিক হাজিরা (ক্লিক করে পরিবর্তন করুন):</div>
+          <div class="attendance-grid" id="maid-attendance-grid">
+            <!-- 30 days grid generated -->
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:14px;">
+          <button class="btn-primary" style="flex:1;" onclick="markMaidToday(true)">
+            <span id="txt-maid-today-pres">✅ আজ উপস্থিত</span>
+          </button>
+          <button class="btn-outline" style="flex:1; border-color:var(--danger); color:var(--danger);" onclick="markMaidToday(false)">
+            <span id="txt-maid-today-abs">❌ আজ অনুপস্থিত</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: Final Memo Generator & WhatsApp Share -->
+    <div id="tab-memo" class="tab-content" style="display:none;">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title">
+            <svg class="icon section-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <span id="txt-memo-gen-title">ফাইনাল মেস মেমো ও বিল স্টেটমেন্ট</span>
+          </div>
+          <button class="btn-primary btn-sm" onclick="generateFinalMemo()">
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            <span id="txt-refresh-memo">রিফ্রেশ মেমো</span>
+          </button>
+        </div>
+
+        <p style="font-size:12px; color:var(--text-muted);" id="txt-memo-desc">
+          মিল খরচ, বাসা ভাড়া, ইউটিলিটি বিল এবং পরিশোধিত টাকা হিসাব করে পুরো মাসের বিস্তারিত মেমো তৈরি করা হয়েছে।
+        </p>
+
+        <!-- Formatted Text Memo Display -->
+        <div class="memo-box" id="final-memo-text">
+          লোড হচ্ছে...
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+          <button class="btn-accent" onclick="shareMemoWhatsApp()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span id="txt-share-wa">মেস হোয়াটসঅ্যাপ গ্রুপে মেমো পাঠান</span>
+          </button>
+
+          <div style="display:flex; gap:10px;">
+            <button class="btn-primary" style="flex:1;" onclick="copyFullMemo()">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span id="txt-copy-memo-btn">পুরো মেমো কপি করুন</span>
+            </button>
+            <button class="btn-outline" style="flex:1;" onclick="window.print()">
+              <svg class="icon" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+              <span id="txt-print-memo-btn">প্রিন্ট / PDF</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Clean Minimalism Bottom Navigation Bar -->
+  <nav class="bottom-nav" id="app-bottom-nav">
+    <div class="bottom-nav-item active" id="bnav-dashboard" onclick="switchTab('dashboard')">
+      <span class="material-symbols-outlined">grid_view</span>
+      <span class="bottom-nav-label">ড্যাশবোর্ড</span>
+    </div>
+    <div class="bottom-nav-item" id="bnav-rent" onclick="switchTab('rent')">
+      <span class="material-symbols-outlined">calculate</span>
+      <span class="bottom-nav-label">ভাড়া ও বিল</span>
+    </div>
+    <div class="bottom-nav-item" id="bnav-bazar" onclick="switchTab('bazar')">
+      <span class="material-symbols-outlined">restaurant_menu</span>
+      <span class="bottom-nav-label">বাজার</span>
+    </div>
+    <div class="bottom-nav-item" id="bnav-swap" onclick="switchTab('swap')">
+      <span class="material-symbols-outlined">swap_horiz</span>
+      <span class="bottom-nav-label">সোয়াপ</span>
+    </div>
+    <div class="bottom-nav-item" id="bnav-maid" onclick="switchTab('maid')">
+      <span class="material-symbols-outlined">cleaning_services</span>
+      <span class="bottom-nav-label">বুয়া</span>
+    </div>
+    <div class="bottom-nav-item" id="bnav-memo" onclick="switchTab('memo')">
+      <span class="material-symbols-outlined">receipt_long</span>
+      <span class="bottom-nav-label">মেমো</span>
+    </div>
+  </nav>
+
+  <!-- MODAL: Quick Payment / টাকা জমা দিন -->
+  <div class="modal-overlay" id="modal-payment">
+    <div class="modal-content">
+      <div class="section-header">
+        <div class="section-title">
+          <svg class="icon section-icon" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          <span id="txt-modal-pay-title">টাকা জমা দিন (Quick Pay Entry)</span>
+        </div>
+        <button onclick="closePaymentModal()" style="background:none; border:none; color:var(--text-muted); font-size:18px; cursor:pointer;">✕</button>
+      </div>
+
+      <form id="form-quick-payment" onsubmit="submitMemberPayment(event)">
+        <div class="form-group" style="margin-bottom:10px;">
+          <label class="form-label" id="lbl-pay-member">মেম্বারের নাম</label>
+          <select class="form-select" id="pay-member-select" required>
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom:10px;">
+          <label class="form-label" id="lbl-pay-amount">পরিশোধের পরিমাণ (৳)</label>
+          <input type="number" class="form-input" id="pay-amount-input" placeholder="যেমন: ৩০০০" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom:10px;">
+          <label class="form-label" id="lbl-pay-method">পেমেন্ট মাধ্যম</label>
+          <select class="form-select" id="pay-method-select">
+            <option value="bKash">bKash (বিকাশ)</option>
+            <option value="Nagad">Nagad (নগদ)</option>
+            <option value="Cash">Cash (নগদ ক্যাশ)</option>
+            <option value="Bank">Bank Transfer</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label" id="lbl-pay-trx">TrxID / রেফারেন্স নোট</label>
+          <input type="text" class="form-input" id="pay-trx-input" placeholder="যেমন: 9JH76T12 বা আগস্ট ভাড়া">
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%;">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          <span id="txt-submit-pay-btn">পেমেন্ট কনফার্ম করুন</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Add New Member -->
+  <div class="modal-overlay" id="modal-member">
+    <div class="modal-content">
+      <div class="section-header">
+        <div class="section-title">
+          <svg class="icon section-icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+          <span id="txt-modal-mem-title">নতুন মেস মেম্বার যুক্ত করুন</span>
+        </div>
+        <button onclick="closeAddMemberModal()" style="background:none; border:none; color:var(--text-muted); font-size:18px; cursor:pointer;">✕</button>
+      </div>
+
+      <form id="form-add-member" onsubmit="saveNewMember(event)">
+        <div class="form-group" style="margin-bottom:10px;">
+          <label class="form-label" id="lbl-new-mem-name">মেম্বারের নাম</label>
+          <input type="text" class="form-input" id="new-mem-name" placeholder="যেমন: সাকিব হাসান" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom:10px;">
+          <label class="form-label" id="lbl-new-mem-phone">মোবাইল নম্বর (SMS ও WhatsApp এর জন্য)</label>
+          <input type="tel" class="form-input" id="new-mem-phone" placeholder="017XXXXXXXX" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label" id="lbl-new-mem-room">রুম নম্বর / ডেজিগনেশন</label>
+          <input type="text" class="form-input" id="new-mem-room" placeholder="রুম ২০৩">
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%;">
+          <span id="txt-save-mem-btn">মেম্বার সংরক্ষণ করুন</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-box"></div>
+
+  <!-- Main JavaScript Application Logic -->
+  <script>
+    // App State Store
+    const APP_STATE = {
+      language: 'bn',
+      theme: 'light',
+      manager: {
+        bkash: '01711223344',
+        nagad: '01911223344',
+        name: 'রাহাত ইসলাম (ম্যানেজার)'
+      },
+      rent: {
+        houseRent: 20000,
+        electricity: 1800,
+        gas: 1080,
+        water: 600,
+        wifi: 1000,
+        other: 500
+      },
+      members: [
+        { id: 1, name: 'তানভীর আহমেদ', phone: '01700112233', room: '301', breakfast: 22, lunch: 24, dinner: 25, paid: 5000, bazarSpent: 2800 },
+        { id: 2, name: 'সাকিব হাসান', phone: '01800223344', room: '301', breakfast: 20, lunch: 22, dinner: 24, paid: 4500, bazarSpent: 2000 },
+        { id: 3, name: 'মাহমুদ শুভ', phone: '01900334455', room: '302', breakfast: 24, lunch: 25, dinner: 26, paid: 6000, bazarSpent: 3450 },
+        { id: 4, name: 'আরিফুল ইসলাম', phone: '01600445566', room: '302', breakfast: 18, lunch: 20, dinner: 22, paid: 4000, bazarSpent: 0 },
+        { id: 5, name: 'ফাহিম মোর্শেদ', phone: '01500556677', room: '303', breakfast: 25, lunch: 25, dinner: 25, paid: 5000, bazarSpent: 0 },
+        { id: 6, name: 'রাহাত ইসলাম', phone: '01711223344', room: '303', breakfast: 22, lunch: 23, dinner: 24, paid: 6500, bazarSpent: 0 }
+      ],
+      bazarHistory: [
+        { id: 1, memberId: 1, memberName: 'তানভীর আহমেদ', amount: 2800, date: '2026-08-20', items: 'মিনিকেট চাল ২৫কেজি, সয়াবিন তেল ৫লিটার, মসুর ডাল ২কেজি' },
+        { id: 2, memberId: 2, memberName: 'সাকিব হাসান', amount: 2000, date: '2026-08-22', items: 'ব্রয়লার মুরগি ৪কেজি, আলু ৫কেজি, পেঁয়াজ ৩কেজি' },
+        { id: 3, memberId: 3, memberName: 'মাহমুদ শুভ', amount: 3450, date: '2026-08-24', items: 'রুই মাছ ৩কেজি, ডিম ৩ ডজন, কাঁচামরিচ, সবজি' }
+      ],
+      swaps: [
+        { id: 1, from: 'তানভীর আহমেদ', to: 'সাকিব হাসান', date: '2026-08-27', reason: 'ইউনিভার্সিটি সেমিস্টার ফাইনাল পরীক্ষা', status: 'Approved' }
+      ],
+      maid: {
+        name: 'রাশিদা খালা',
+        salary: 3500,
+        attendance: Array.from({length: 30}, (_, i) => (i < 26 ? (i % 7 === 4 ? false : true) : true))
+      }
+    };
+
+    // Bengali Translations Dictionary
+    const I18N = {
+      bn: {
+        tagline: 'স্মার্ট মেস ম্যানেজার ও অটো নোটিফিকেশন',
+        mgrPay: 'মেস ম্যানেজার কুইক পে (bKash/Nagad)',
+        addPayBtn: 'টাকা জমা দিন',
+        copy: 'কপি',
+        copiedToast: 'নম্বর সফলভাবে কপি করা হয়েছে!',
+        sendSMS: 'SMS পাঠান',
+        rate: 'লাইভ মিল রেট',
+        rateSub: 'মোট খরচ ÷ মোট মিল',
+        bazar: 'মোট বাজার খরচ',
+        bazarSub: 'চলতি মাস',
+        meals: 'মোট মিল সংখ্যা',
+        mealsSub: 'সকল মেম্বার মিলিয়ে',
+        headRent: 'মাথাপিছু বাসা ভাড়া',
+        headRentSub: 'ভাড়া + সকল বিল',
+        mealTrackerTitle: 'দৈনিক মিল ট্র্যাকার (সকাল, দুপুর, রাত)',
+        addMemberBtn: '+ মেম্বার যোগ',
+        dueTitle: 'মেম্বার ডিউ / অ্যাডভান্স ব্যালেন্স (বাসা ভাড়াসহ)',
+        dueSub: '১-ক্লিকে রিমাইন্ডার পাঠান',
+        breakfast: 'সকাল',
+        lunch: 'দুপুর',
+        dinner: 'রাত',
+        totalMeals: 'মোট মিল',
+        paid: 'জমা',
+        cost: 'মোট খরচ',
+        due: 'বাকি (দেবে)',
+        advance: 'অগ্রিম (পাবে)',
+        remindWA: 'WhatsApp রিমাইন্ডার',
+        remindSMS: 'SMS রিমাইন্ডার',
+        bazarToday: 'আজ বাজার করার পালা',
+        bazarTmw: 'আগামীকাল বাজার করার পালা',
+        rentSavedToast: 'বাসা ভাড়া সফলভাবে সংরক্ষিত হয়েছে!',
+        memberAddedToast: 'নতুন মেম্বার যুক্ত হয়েছে!',
+        paymentSuccessToast: 'পেমেন্ট সফলভাবে জমা হয়েছে!',
+        swapSuccessToast: 'সোয়াপ রিকোয়েস্ট সফল হয়েছে!',
+        maidPresToast: 'আজকের বুয়া উপস্থিতি সম্পন্ন!',
+        maidAbsToast: 'আজকের বুয়া ছুটি হিসেবে মার্ক করা হয়েছে!'
+      },
+      en: {
+        tagline: 'Smart Mess Manager & Auto Notifications',
+        mgrPay: 'Mess Manager Quick Pay (bKash/Nagad)',
+        addPayBtn: 'Deposit Money',
+        copy: 'Copy',
+        copiedToast: 'Number copied to clipboard!',
+        sendSMS: 'Send SMS',
+        rate: 'Live Meal Rate',
+        rateSub: 'Total Cost ÷ Total Meals',
+        bazar: 'Total Bazar Expense',
+        bazarSub: 'Current Month',
+        meals: 'Total Meals Count',
+        mealsSub: 'All Members Combined',
+        headRent: 'Per Head House Rent',
+        headRentSub: 'Rent + All Bills',
+        mealTrackerTitle: 'Daily Meal Tracker (Bfast, Lunch, Dinner)',
+        addMemberBtn: '+ Add Member',
+        dueTitle: 'Member Due / Advance Balance (Inc. Rent)',
+        dueSub: '1-Click Reminders',
+        breakfast: 'Bfast',
+        lunch: 'Lunch',
+        dinner: 'Dinner',
+        totalMeals: 'Total Meals',
+        paid: 'Paid',
+        cost: 'Total Cost',
+        due: 'Due',
+        advance: 'Advance',
+        remindWA: 'WhatsApp Remind',
+        remindSMS: 'SMS Remind',
+        bazarToday: 'Today\'s Bazar Turn',
+        bazarTmw: 'Tomorrow\'s Bazar Turn',
+        rentSavedToast: 'Rent settings saved successfully!',
+        memberAddedToast: 'New member added successfully!',
+        paymentSuccessToast: 'Payment recorded successfully!',
+        swapSuccessToast: 'Swap request submitted!',
+        maidPresToast: 'Maid marked present for today!',
+        maidAbsToast: 'Maid marked absent for today!'
+      }
+    };
+
+    // Bengali Number Converter
+    function toBnNum(num) {
+      if (APP_STATE.language === 'en') return String(num);
+      const bnDigits = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+      return String(num).replace(/[0-9]/g, d => bnDigits[d]);
+    }
+
+    // Dynamic BD Date & Live Clock
+    function updateLiveBDDateTime() {
+      const now = new Date();
+      // Format dynamic Bangladesh date
+      const monthsBn = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
+      const monthsEn = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      
+      const day = now.getDate();
+      const monthIdx = now.getMonth();
+      const year = now.getFullYear();
+
+      const dateStr = APP_STATE.language === 'bn' 
+        ? `${toBnNum(day)} ${monthsBn[monthIdx]}, ${toBnNum(year)}`
+        : `${day} ${monthsEn[monthIdx]}, ${year}`;
+      
+      document.getElementById('live-bd-date').textContent = dateStr;
+
+      // Time formatting (12hr format)
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      const timeStr = `${toBnNum(hours)}:${toBnNum(minutes)} ${ampm}`;
+      document.getElementById('live-bd-time').textContent = timeStr;
+
+      // Check current hour for 9 PM night alert and 7 AM morning alert
+      updateBazarNotificationBanner(now.getHours());
+    }
+
+    // Auto Night & Morning Bazar Alert System
+    function updateBazarNotificationBanner(currentHour) {
+      // Rotation logic: determine today and tomorrow's assignee
+      const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+      const membersCount = APP_STATE.members.length || 1;
+      
+      const todayAssigneeIndex = (dayOfYear) % membersCount;
+      const tmwAssigneeIndex = (dayOfYear + 1) % membersCount;
+      
+      const todayMember = APP_STATE.members[todayAssigneeIndex] || APP_STATE.members[0];
+      const tmwMember = APP_STATE.members[tmwAssigneeIndex] || APP_STATE.members[0];
+
+      const alertTag = document.getElementById('alert-schedule-tag');
+      const alertTimeStatus = document.getElementById('alert-time-status');
+      const alertMainMsg = document.getElementById('alert-main-msg');
+      const nameSpan = document.getElementById('bazar-person-name');
+      const phoneSpan = document.getElementById('bazar-person-phone');
+
+      if (currentHour >= 21 || currentHour < 7) {
+        // Night 9:00 PM Alert (Tomorrow's turn)
+        alertTag.textContent = '🌙 রাত ৯:০০ অটো অ্যালার্ট';
+        alertTimeStatus.textContent = 'আগামীকালের বাজার নোটিফিকেশন';
+        nameSpan.textContent = tmwMember.name;
+        phoneSpan.textContent = tmwMember.phone;
+        alertMainMsg.innerHTML = `⚠️ আগামীকাল আপনার বাজার করার পালা: <span style="color:var(--accent-orange); font-weight:800;">${tmwMember.name}</span>`;
+      } else {
+        // Morning 7:00 AM Alert (Today's turn)
+        alertTag.textContent = '🛒 সকাল ৭:০০ অটো অ্যালার্ট';
+        alertTimeStatus.textContent = 'আজকের বাজার ফাইনাল রিমাইন্ডার';
+        nameSpan.textContent = todayMember.name;
+        phoneSpan.textContent = todayMember.phone;
+        alertMainMsg.innerHTML = `🛒 আজ আপনার বাজার করার পালা: <span style="color:var(--accent-orange); font-weight:800;">${todayMember.name}</span>`;
+      }
+    }
+
+    // 1-Click Send SMS to Bazar Assignee
+    function sendBazarSMS() {
+      const now = new Date();
+      const currentHour = now.getHours();
+      const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+      const membersCount = APP_STATE.members.length || 1;
+      const targetMember = (currentHour >= 21 || currentHour < 7) 
+        ? APP_STATE.members[(dayOfYear + 1) % membersCount] 
+        : APP_STATE.members[(dayOfYear) % membersCount];
+
+      const smsText = (currentHour >= 21 || currentHour < 7)
+        ? `[BD Mess Alert] আসসালামু আলাইকুম ${targetMember.name}, আগামীকাল আপনার মেসের বাজার করার পালা। সকালের মধ্যে বাজার সম্পন্ন করুন। ধন্যবাদ - মেস ম্যানেজার।`
+        : `[BD Mess Alert] শুভ সকাল ${targetMember.name}, আজ আপনার মেসের বাজার করার পালা। দ্রুত বাজার সম্পন্ন করুন। ধন্যবাদ - মেস ম্যানেজার।`;
+
+      // Trigger native Android SMS Bridge if available, otherwise open sms: url
+      if (window.AndroidBridge && window.AndroidBridge.sendSMS) {
+        window.AndroidBridge.sendSMS(targetMember.phone, smsText);
+      } else {
+        window.location.href = `sms:${targetMember.phone}?body=${encodeURIComponent(smsText)}`;
+      }
+      showToast(`SMS পাঠানো হচ্ছে: ${targetMember.name} (${targetMember.phone})`);
+    }
+
+    // Copy to Clipboard
+    function copyNumber(type) {
+      const num = type === 'bkash' ? APP_STATE.manager.bkash : APP_STATE.manager.nagad;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(num);
+      } else if (window.AndroidBridge && window.AndroidBridge.copyToClipboard) {
+        window.AndroidBridge.copyToClipboard(num);
+      }
+      showToast(`${type.toUpperCase()} নম্বর (${num}) কপি হয়েছে!`);
+    }
+
+    // Toast Notification Display
+    function showToast(msg) {
+      const box = document.getElementById('toast-box');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> <span>${msg}</span>`;
+      box.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(20px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Theme Switcher (Light / Dark)
+    function toggleTheme() {
+      APP_STATE.theme = APP_STATE.theme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', APP_STATE.theme);
+      document.getElementById('theme-icon').textContent = APP_STATE.theme === 'light' ? '🌙' : '☀️';
+      saveState();
+    }
+
+    // Language Switcher (BN / EN)
+    function toggleLanguage() {
+      APP_STATE.language = APP_STATE.language === 'bn' ? 'en' : 'bn';
+      document.getElementById('lang-label').textContent = APP_STATE.language === 'bn' ? 'BN | EN' : 'EN | বাংলা';
+      renderAll();
+      saveState();
+    }
+
+    // Tab Navigation Switcher
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.bottom-nav-item').forEach(el => el.classList.remove('active'));
+
+      const targetTab = document.getElementById(`tab-${tabId}`);
+      if (targetTab) targetTab.style.display = 'block';
+
+      const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(tabId));
+      if (btn) btn.classList.add('active');
+
+      const bnavBtn = document.getElementById(`bnav-${tabId}`);
+      if (bnavBtn) bnavBtn.classList.add('active');
+
+      if (tabId === 'memo') {
+        generateFinalMemo();
+      }
+    }
+
+    // Core Calculations: Meal Rate, Per Head Rent, Dues & Advances
+    function getCalculations() {
+      const totalBazar = APP_STATE.bazarHistory.reduce((sum, item) => sum + (Number(item.amount) || 0), 0);
+      
+      let totalMeals = 0;
+      APP_STATE.members.forEach(m => {
+        const mTotal = (Number(m.breakfast) || 0) * 0.5 + (Number(m.lunch) || 0) + (Number(m.dinner) || 0);
+        totalMeals += mTotal;
+      });
+
+      const mealRate = totalMeals > 0 ? (totalBazar / totalMeals) : 0;
+
+      // Rent & Utilities
+      const rentObj = APP_STATE.rent;
+      const totalRentAndBills = (Number(rentObj.houseRent) || 0) + 
+                                (Number(rentObj.electricity) || 0) + 
+                                (Number(rentObj.gas) || 0) + 
+                                (Number(rentObj.water) || 0) + 
+                                (Number(rentObj.wifi) || 0) + 
+                                (Number(rentObj.other) || 0);
+      
+      const memberCount = APP_STATE.members.length || 1;
+      const perHeadRent = totalRentAndBills / memberCount;
+
+      return {
+        totalBazar,
+        totalMeals,
+        mealRate,
+        totalRentAndBills,
+        perHeadRent,
+        memberCount
+      };
+    }
+
+    // Calculate individual member balance
+    function getMemberBalance(member, mealRate, perHeadRent) {
+      const memberMeals = (Number(member.breakfast) || 0) * 0.5 + (Number(member.lunch) || 0) + (Number(member.dinner) || 0);
+      const mealCost = memberMeals * mealRate;
+      const totalCost = mealCost + perHeadRent;
+      const totalPaid = (Number(member.paid) || 0) + (Number(member.bazarSpent) || 0);
+      const balance = totalPaid - totalCost; // Positive = Advance, Negative = Due
+
+      return {
+        memberMeals,
+        mealCost,
+        totalCost,
+        totalPaid,
+        balance,
+        isDue: balance < 0,
+        dueAmount: Math.abs(balance)
+      };
+    }
+
+    // Render Members Live Meal Tracker List
+    function renderMealTracker(mealRate, perHeadRent) {
+      const listEl = document.getElementById('members-meal-list');
+      listEl.innerHTML = '';
+
+      APP_STATE.members.forEach((m, idx) => {
+        const bal = getMemberBalance(m, mealRate, perHeadRent);
+        const card = document.createElement('div');
+        card.className = 'member-meal-card';
+        card.innerHTML = `
+          <div class="member-header">
+            <div class="member-info">
+              <div class="member-avatar">${m.name.charAt(0)}</div>
+              <div>
+                <div class="member-name">${m.name}</div>
+                <div class="member-phone">📞 ${m.phone} | Room ${m.room || 'N/A'}</div>
+              </div>
+            </div>
+            <div style="text-align:right;">
+              <span class="due-badge ${bal.isDue ? 'due' : 'advance'}">
+                ${bal.isDue ? 'বাকি' : 'পাবে'}: ৳ ${toBnNum(Math.round(bal.dueAmount))}
+              </span>
+              <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">মোট মিল: ${toBnNum(bal.memberMeals.toFixed(1))}</div>
+            </div>
+          </div>
+
+          <div class="meal-counter-row">
+            <div class="meal-slot">
+              <span class="meal-slot-label">🍳 সকাল (০.৫)</span>
+              <div class="counter-controls">
+                <button class="btn-counter" onclick="changeMeal(${m.id}, 'breakfast', -1)">-</button>
+                <span class="meal-count-display">${toBnNum(m.breakfast || 0)}</span>
+                <button class="btn-counter" onclick="changeMeal(${m.id}, 'breakfast', 1)">+</button>
+              </div>
+            </div>
+
+            <div class="meal-slot">
+              <span class="meal-slot-label">🍛 দুপুর (১.০)</span>
+              <div class="counter-controls">
+                <button class="btn-counter" onclick="changeMeal(${m.id}, 'lunch', -1)">-</button>
+                <span class="meal-count-display">${toBnNum(m.lunch || 0)}</span>
+                <button class="btn-counter" onclick="changeMeal(${m.id}, 'lunch', 1)">+</button>
+              </div>
+            </div>
+
+            <div class="meal-slot">
+              <span class="meal-slot-label">🍲 রাত (১.০)</span>
+              <div class="counter-controls">
+                <button class="btn-counter" onclick="changeMeal(${m.id}, 'dinner', -1)">-</button>
+                <span class="meal-count-display">${toBnNum(m.dinner || 0)}</span>
+                <button class="btn-counter" onclick="changeMeal(${m.id}, 'dinner', 1)">+</button>
+              </div>
+            </div>
+          </div>
+        `;
+        listEl.appendChild(card);
+      });
+    }
+
+    // Change Meal Counter (+ or -)
+    function changeMeal(memberId, mealType, delta) {
+      const member = APP_STATE.members.find(m => m.id === memberId);
+      if (!member) return;
+      member[mealType] = Math.max(0, (member[mealType] || 0) + delta);
+      renderAll();
+      saveState();
+    }
+
+    // Render Dues and 1-Click WhatsApp / SMS Reminders
+    function renderDueBalances(mealRate, perHeadRent) {
+      const listEl = document.getElementById('due-balance-list');
+      listEl.innerHTML = '';
+
+      APP_STATE.members.forEach(m => {
+        const bal = getMemberBalance(m, mealRate, perHeadRent);
+        const item = document.createElement('div');
+        item.className = 'bill-item';
+        item.innerHTML = `
+          <div>
+            <div style="font-weight:700; font-size:14px;">${m.name}</div>
+            <div style="font-size:11px; color:var(--text-muted);">
+              মিল: ৳${toBnNum(Math.round(bal.mealCost))} + ভাড়া: ৳${toBnNum(Math.round(perHeadRent))} | জমা: ৳${toBnNum(bal.totalPaid)}
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="due-badge ${bal.isDue ? 'due' : 'advance'}">
+              ${bal.isDue ? 'ডিউ ৳' + toBnNum(Math.round(bal.dueAmount)) : 'অ্যাডভান্স ৳' + toBnNum(Math.round(bal.dueAmount))}
+            </span>
+            ${bal.isDue ? `
+              <button class="btn-outline btn-sm" style="color:#25d366; border-color:#25d366; padding:4px 8px;" onclick="sendWhatsAppReminder(${m.id})">
+                <svg class="icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                WA
+              </button>
+            ` : ''}
+          </div>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    // 1-Click WhatsApp Reminder Sender
+    function sendWhatsAppReminder(memberId) {
+      const calc = getCalculations();
+      const member = APP_STATE.members.find(m => m.id === memberId);
+      if (!member) return;
+      const bal = getMemberBalance(member, calc.mealRate, calc.perHeadRent);
+
+      const msg = `[BD Mess Due Reminder]\nআসসালামু আলাইকুম ${member.name},\nচলতি মাসের আপনার মেস খরচ বিবরণী:\n- মিল খরচ: ৳${Math.round(bal.mealCost)} (${bal.memberMeals.toFixed(1)} মিল)\n- মাথাপিছু বাসা ভাড়া ও বিল: ৳${Math.round(calc.perHeadRent)}\n- আপনার মোট পরিশোধ: ৳${bal.totalPaid}\n--------------------------\nমোট বাকি (Due): ৳${Math.round(bal.dueAmount)}\n\nদয়া করে দ্রুত ম্যানেজারের নম্বরে (bKash: ${APP_STATE.manager.bkash} / Nagad: ${APP_STATE.manager.nagad}) পরিশোধ করুন। ধন্যবাদ!`;
+
+      if (window.AndroidBridge && window.AndroidBridge.shareWhatsApp) {
+        window.AndroidBridge.shareWhatsApp(member.phone, msg);
+      } else {
+        const cleanPhone = member.phone.replace(/[^0-9]/g, '');
+        const intlPhone = cleanPhone.startsWith('88') ? cleanPhone : '88' + cleanPhone;
+        window.open(`https://wa.me/${intlPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+      }
+      showToast(`${member.name}-কে WhatsApp রিমাইন্ডার পাঠানো হচ্ছে...`);
+    }
+
+    // Render Rent & Utility Values
+    function renderRentTab(calc) {
+      document.getElementById('input-house-rent').value = APP_STATE.rent.houseRent;
+      document.getElementById('input-elec-bill').value = APP_STATE.rent.electricity;
+      document.getElementById('input-gas-bill').value = APP_STATE.rent.gas;
+      document.getElementById('input-water-bill').value = APP_STATE.rent.water;
+      document.getElementById('input-wifi-bill').value = APP_STATE.rent.wifi;
+      document.getElementById('input-other-bill').value = APP_STATE.rent.other;
+
+      document.getElementById('disp-total-rent-all').textContent = `৳ ${toBnNum(Math.round(calc.totalRentAndBills))}`;
+      document.getElementById('disp-total-members-count').textContent = `${toBnNum(calc.memberCount)} জন`;
+      document.getElementById('disp-per-head-rent-calc').textContent = `৳ ${toBnNum(Math.round(calc.perHeadRent))}`;
+    }
+
+    // Live calculate when inputs change
+    function calculateRentAndBills() {
+      APP_STATE.rent.houseRent = Number(document.getElementById('input-house-rent').value) || 0;
+      APP_STATE.rent.electricity = Number(document.getElementById('input-elec-bill').value) || 0;
+      APP_STATE.rent.gas = Number(document.getElementById('input-gas-bill').value) || 0;
+      APP_STATE.rent.water = Number(document.getElementById('input-water-bill').value) || 0;
+      APP_STATE.rent.wifi = Number(document.getElementById('input-wifi-bill').value) || 0;
+      APP_STATE.rent.other = Number(document.getElementById('input-other-bill').value) || 0;
+
+      const calc = getCalculations();
+      document.getElementById('disp-total-rent-all').textContent = `৳ ${toBnNum(Math.round(calc.totalRentAndBills))}`;
+      document.getElementById('disp-per-head-rent-calc').textContent = `৳ ${toBnNum(Math.round(calc.perHeadRent))}`;
+      document.getElementById('stat-per-head-rent').textContent = `৳ ${toBnNum(Math.round(calc.perHeadRent))}`;
+    }
+
+    function saveRentSettings() {
+      calculateRentAndBills();
+      renderAll();
+      saveState();
+      showToast(I18N[APP_STATE.language].rentSavedToast);
+    }
+
+    // Render Bazar History
+    function renderBazarHistory() {
+      const listEl = document.getElementById('bazar-history-list');
+      listEl.innerHTML = '';
+
+      APP_STATE.bazarHistory.slice().reverse().forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'bill-item';
+        div.innerHTML = `
+          <div>
+            <div style="font-weight:700; font-size:14px; color:var(--text-main);">${item.memberName}</div>
+            <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">${item.items || 'সাধারণ বাজার খরচ'}</div>
+            <div style="font-size:10px; color:var(--text-light); margin-top:2px;">📅 ${item.date}</div>
+          </div>
+          <div style="font-size:16px; font-weight:800; color:var(--accent-orange);">
+            ৳ ${toBnNum(item.amount)}
+          </div>
+        `;
+        listEl.appendChild(div);
+      });
+
+      document.getElementById('disp-bazar-count').textContent = `${toBnNum(APP_STATE.bazarHistory.length)}টি এন্ট্রি`;
+    }
+
+    // Add New Bazar Expense
+    function addBazarExpense(e) {
+      e.preventDefault();
+      const memberId = Number(document.getElementById('bazar-member-select').value);
+      const amount = Number(document.getElementById('bazar-amount-input').value) || 0;
+      const date = document.getElementById('bazar-date-input').value || new Date().toISOString().split('T')[0];
+      const items = document.getElementById('bazar-items-input').value;
+
+      const member = APP_STATE.members.find(m => m.id === memberId);
+      if (!member || amount <= 0) return;
+
+      // Add to bazar history
+      APP_STATE.bazarHistory.push({
+        id: Date.now(),
+        memberId: member.id,
+        memberName: member.name,
+        amount: amount,
+        date: date,
+        items: items
+      });
+
+      // Update member's bazar spent
+      member.bazarSpent = (member.bazarSpent || 0) + amount;
+
+      document.getElementById('form-bazar-entry').reset();
+      document.getElementById('bazar-date-input').value = new Date().toISOString().split('T')[0];
+
+      renderAll();
+      saveState();
+      showToast(`৳ ${toBnNum(amount)} টাকার বাজার সফলভাবে যুক্ত হয়েছে!`);
+    }
+
+    // Emergency Swap Request
+    function submitSwapRequest(e) {
+      e.preventDefault();
+      const fromName = document.getElementById('swap-from-member').value;
+      const toName = document.getElementById('swap-to-member').value;
+      const reasonText = document.getElementById('swap-reason-select').options[document.getElementById('swap-reason-select').selectedIndex].text;
+      const date = document.getElementById('swap-date-input').value;
+
+      if (fromName === toName) {
+        alert('আবেদনকারী ও সঙ্গী একই মেম্বার হতে পারে না!');
+        return;
+      }
+
+      APP_STATE.swaps.unshift({
+        id: Date.now(),
+        from: fromName,
+        to: toName,
+        date: date,
+        reason: reasonText,
+        status: 'Approved & Swapped'
+      });
+
+      renderSwaps();
+      saveState();
+      showToast(`বাজার সোয়াপ সফল হয়েছে: ${fromName} ↔ ${toName}`);
+    }
+
+    function renderSwaps() {
+      const listEl = document.getElementById('swap-history-list');
+      listEl.innerHTML = '';
+
+      APP_STATE.swaps.forEach(sw => {
+        const div = document.createElement('div');
+        div.className = 'swap-card';
+        div.innerHTML = `
+          <div>
+            <div style="font-weight:700; font-size:13px;">${sw.from} ➔ ${sw.to}</div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">কারণ: ${sw.reason} | তারিখ: ${sw.date}</div>
+          </div>
+          <span class="due-badge advance" style="font-size:10px;">${sw.status}</span>
+        `;
+        listEl.appendChild(div);
+      });
+    }
+
+    // Maid Tracker Module
+    function renderMaidModule() {
+      document.getElementById('input-maid-name').value = APP_STATE.maid.name;
+      document.getElementById('input-maid-salary').value = APP_STATE.maid.salary;
+
+      const grid = document.getElementById('maid-attendance-grid');
+      grid.innerHTML = '';
+
+      let presentCount = 0;
+      let absentCount = 0;
+      const todayDate = new Date().getDate();
+
+      APP_STATE.maid.attendance.forEach((isPresent, idx) => {
+        const dayNum = idx + 1;
+        if (isPresent) presentCount++;
+        else absentCount++;
+
+        const box = document.createElement('div');
+        box.className = `day-box ${isPresent ? 'present' : 'absent'} ${dayNum === todayDate ? 'today' : ''}`;
+        box.innerHTML = `<span>${toBnNum(dayNum)}</span><span style="font-size:8px;">${isPresent ? '✓' : '✗'}</span>`;
+        box.onclick = () => {
+          APP_STATE.maid.attendance[idx] = !APP_STATE.maid.attendance[idx];
+          renderMaidModule();
+          saveState();
+        };
+        grid.appendChild(box);
+      });
+
+      document.getElementById('maid-present-count').textContent = `${toBnNum(presentCount)} দিন`;
+      document.getElementById('maid-absent-count').textContent = `${toBnNum(absentCount)} দিন`;
+
+      // Salary calc
+      const totalSalary = Number(APP_STATE.maid.salary) || 3500;
+      document.getElementById('maid-payable-salary').textContent = `৳ ${toBnNum(totalSalary)}`;
+    }
+
+    function markMaidToday(isPresent) {
+      const dayIdx = (new Date().getDate() - 1) % 30;
+      APP_STATE.maid.attendance[dayIdx] = isPresent;
+      renderMaidModule();
+      saveState();
+      showToast(isPresent ? I18N[APP_STATE.language].maidPresToast : I18N[APP_STATE.language].maidAbsToast);
+    }
+
+    function updateMaidSummary() {
+      APP_STATE.maid.salary = Number(document.getElementById('input-maid-salary').value) || 0;
+      renderMaidModule();
+      saveState();
+    }
+
+    // Final Memo Generator
+    function generateFinalMemo() {
+      const calc = getCalculations();
+      const now = new Date();
+      const dateHeader = `${now.getDate()} আগস্ট, ${now.getFullYear()}`;
+
+      let memo = `=====================================\n`;
+      memo += `        🏢 BD MESS MONTHLY MEMO       \n`;
+      memo += `         তারিখ: ${dateHeader}        \n`;
+      memo += `=====================================\n\n`;
+
+      memo += `[১] মেস সামারি ও মিল রেট:\n`;
+      memo += `-------------------------------------\n`;
+      memo += `• সর্বমোট বাজার খরচ: ৳ ${calc.totalBazar.toFixed(2)}\n`;
+      memo += `• সর্বমোট মিল সংখ্যা: ${calc.totalMeals.toFixed(1)} টি\n`;
+      memo += `• লাইভ মিল রেট: ৳ ${calc.mealRate.toFixed(2)} / মিল\n\n`;
+
+      memo += `[২] বাসা ভাড়া ও ইউটিলিটি বিল:\n`;
+      memo += `-------------------------------------\n`;
+      memo += `• মূল বাসা ভাড়া: ৳ ${APP_STATE.rent.houseRent}\n`;
+      memo += `• বিদ্যুৎ বিল: ৳ ${APP_STATE.rent.electricity}\n`;
+      memo += `• গ্যাস বিল: ৳ ${APP_STATE.rent.gas}\n`;
+      memo += `• পানি ও ময়লা বিল: ৳ ${APP_STATE.rent.water}\n`;
+      memo += `• ইন্টারনেট / WiFi: ৳ ${APP_STATE.rent.wifi}\n`;
+      memo += `• অন্যান্য চার্জ: ৳ ${APP_STATE.rent.other}\n`;
+      memo += `• মোট বাসা খরচ: ৳ ${calc.totalRentAndBills}\n`;
+      memo += `• মাথাপিছু ভাড়া (Per Head): ৳ ${calc.perHeadRent.toFixed(2)}\n\n`;
+
+      memo += `[৩] মেম্বারদের ফাইনাল স্টেটমেন্ট:\n`;
+      memo += `-------------------------------------\n`;
+
+      APP_STATE.members.forEach((m, idx) => {
+        const bal = getMemberBalance(m, calc.mealRate, calc.perHeadRent);
+        memo += `${idx + 1}. ${m.name} (Room ${m.room || 'N/A'})\n`;
+        memo += `   - মিল সংখ্যা: ${bal.memberMeals.toFixed(1)} টি (খরচ: ৳${bal.mealCost.toFixed(2)})\n`;
+        memo += `   - বাসা ভাড়া শেয়ার: ৳${calc.perHeadRent.toFixed(2)}\n`;
+        memo += `   - মোট খরচ: ৳${bal.totalCost.toFixed(2)}\n`;
+        memo += `   - মোট জমা/বাজার: ৳${bal.totalPaid.toFixed(2)}\n`;
+        if (bal.isDue) {
+          memo += `   >> স্ট্যাটাস: ⚠️ বাকি (DUE) ৳${bal.dueAmount.toFixed(2)}\n\n`;
+        } else {
+          memo += `   >> স্ট্যাটাস: ✅ ফেরত পাবে (ADVANCE) ৳${bal.dueAmount.toFixed(2)}\n\n`;
+        }
+      });
+
+      memo += `=====================================\n`;
+      memo += `পেমেন্ট পরিশোধের মেস ম্যানেজার নম্বর:\n`;
+      memo += `bKash Personal: ${APP_STATE.manager.bkash}\n`;
+      memo += `Nagad Personal: ${APP_STATE.manager.nagad}\n`;
+      memo += `=====================================`;
+
+      document.getElementById('final-memo-text').textContent = memo;
+    }
+
+    function shareMemoWhatsApp() {
+      const memo = document.getElementById('final-memo-text').textContent;
+      if (window.AndroidBridge && window.AndroidBridge.shareWhatsApp) {
+        window.AndroidBridge.shareWhatsApp("", memo);
+      } else {
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(memo)}`, '_blank');
+      }
+    }
+
+    function copyFullMemo() {
+      const memo = document.getElementById('final-memo-text').textContent;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(memo);
+      } else if (window.AndroidBridge && window.AndroidBridge.copyToClipboard) {
+        window.AndroidBridge.copyToClipboard(memo);
+      }
+      showToast('পুরো মেমো ক্লিপবোর্ডে কপি করা হয়েছে!');
+    }
+
+    // Modal Handlers
+    function openPaymentModal() {
+      populateMemberSelect('pay-member-select');
+      document.getElementById('modal-payment').classList.add('active');
+    }
+
+    function closePaymentModal() {
+      document.getElementById('modal-payment').classList.remove('active');
+    }
+
+    function submitMemberPayment(e) {
+      e.preventDefault();
+      const memberId = Number(document.getElementById('pay-member-select').value);
+      const amount = Number(document.getElementById('pay-amount-input').value) || 0;
+      const method = document.getElementById('pay-method-select').value;
+      const trx = document.getElementById('pay-trx-input').value;
+
+      const member = APP_STATE.members.find(m => m.id === memberId);
+      if (!member || amount <= 0) return;
+
+      member.paid = (member.paid || 0) + amount;
+      closePaymentModal();
+      document.getElementById('form-quick-payment').reset();
+
+      renderAll();
+      saveState();
+      showToast(`${member.name}-এর ৳${toBnNum(amount)} (${method}) জমা সফল হয়েছে!`);
+    }
+
+    function openAddMemberModal() {
+      document.getElementById('modal-member').classList.add('active');
+    }
+
+    function closeAddMemberModal() {
+      document.getElementById('modal-member').classList.remove('active');
+    }
+
+    function saveNewMember(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-mem-name').value;
+      const phone = document.getElementById('new-mem-phone').value;
+      const room = document.getElementById('new-mem-room').value;
+
+      if (!name || !phone) return;
+
+      APP_STATE.members.push({
+        id: Date.now(),
+        name: name,
+        phone: phone,
+        room: room,
+        breakfast: 0,
+        lunch: 0,
+        dinner: 0,
+        paid: 0,
+        bazarSpent: 0
+      });
+
+      closeAddMemberModal();
+      document.getElementById('form-add-member').reset();
+
+      renderAll();
+      saveState();
+      showToast(`${name} মেম্বার সফলভাবে যুক্ত হয়েছে!`);
+    }
+
+    // Populate Member Dropdowns
+    function populateMemberSelect(selectId) {
+      const select = document.getElementById(selectId);
+      if (!select) return;
+      select.innerHTML = '';
+      APP_STATE.members.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m.id || m.name;
+        opt.textContent = `${m.name} (${m.phone})`;
+        select.appendChild(opt);
+      });
+    }
+
+    function populateAllSelects() {
+      populateMemberSelect('bazar-member-select');
+      populateMemberSelect('pay-member-select');
+
+      const swapFrom = document.getElementById('swap-from-member');
+      const swapTo = document.getElementById('swap-to-member');
+      if (swapFrom && swapTo) {
+        swapFrom.innerHTML = '';
+        swapTo.innerHTML = '';
+        APP_STATE.members.forEach((m, i) => {
+          const opt1 = document.createElement('option');
+          opt1.value = m.name;
+          opt1.textContent = m.name;
+          swapFrom.appendChild(opt1);
+
+          const opt2 = document.createElement('option');
+          opt2.value = m.name;
+          opt2.textContent = m.name;
+          if (i === 1) opt2.selected = true;
+          swapTo.appendChild(opt2);
+        });
+      }
+    }
+
+    // Global State Persistence
+    function saveState() {
+      try {
+        localStorage.setItem('BD_MESS_APP_DATA', JSON.stringify(APP_STATE));
+      } catch (e) {
+        console.error('LocalStorage error', e);
+      }
+    }
+
+    function loadState() {
+      try {
+        const data = localStorage.getItem('BD_MESS_APP_DATA');
+        if (data) {
+          const parsed = JSON.parse(data);
+          Object.assign(APP_STATE, parsed);
+        }
+      } catch (e) {
+        console.error('LocalStorage read error', e);
+      }
+    }
+
+    // Main Render All Function
+    function renderAll() {
+      const calc = getCalculations();
+
+      // Top Statistics
+      document.getElementById('stat-meal-rate').textContent = `৳ ${toBnNum(calc.mealRate.toFixed(2))}`;
+      document.getElementById('stat-total-bazar').textContent = `৳ ${toBnNum(Math.round(calc.totalBazar))}`;
+      document.getElementById('stat-total-meals').textContent = `${toBnNum(calc.totalMeals.toFixed(1))} টি`;
+      document.getElementById('stat-per-head-rent').textContent = `৳ ${toBnNum(Math.round(calc.perHeadRent))}`;
+
+      // Sections
+      renderMealTracker(calc.mealRate, calc.perHeadRent);
+      renderDueBalances(calc.mealRate, calc.perHeadRent);
+      renderRentTab(calc);
+      renderBazarHistory();
+      renderSwaps();
+      renderMaidModule();
+      populateAllSelects();
+
+      // Dates and alert
+      updateLiveBDDateTime();
+    }
+
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      
+      // Apply theme
+      document.documentElement.setAttribute('data-theme', APP_STATE.theme);
+      document.getElementById('theme-icon').textContent = APP_STATE.theme === 'light' ? '🌙' : '☀️';
+
+      // Set default input dates
+      const todayStr = new Date().toISOString().split('T')[0];
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const tomorrowStr = tomorrow.toISOString().split('T')[0];
+
+      if (document.getElementById('bazar-date-input')) {
+        document.getElementById('bazar-date-input').value = todayStr;
+      }
+      if (document.getElementById('swap-date-input')) {
+        document.getElementById('swap-date-input').value = tomorrowStr;
+      }
+
+      renderAll();
+
+      // Update dynamic live clock every 30 seconds
+      setInterval(updateLiveBDDateTime, 30000);
+    });
+  </script>
+</body>
+</html>
