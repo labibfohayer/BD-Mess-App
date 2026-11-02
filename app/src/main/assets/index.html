@@ -4,6 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>BD Mess - Smart Mess Management System</title>
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d9488">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="BD Mess">
+  <meta name="application-name" content="BD Mess">
   <!-- Google Fonts: Inter, Hind Siliguri, and Material Symbols for Clean Minimalism aesthetic -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -147,16 +159,21 @@
     .logo-icon {
       width: 38px;
       height: 38px;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(8px);
-      color: #ffffff;
-      border-radius: var(--radius-sm);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      font-weight: 800;
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .logo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .brand-title {
@@ -1045,7 +1062,7 @@
       <div class="header-top">
         <div class="brand-logo">
           <div class="logo-icon">
-            <span class="material-symbols-outlined" style="font-size:22px;">apartment</span>
+            <img src="favicon-32x32.png" alt="BD Mess Logo" width="38" height="38">
           </div>
           <div>
             <div class="brand-title">BD Mess</div>
@@ -1054,6 +1071,12 @@
         </div>
 
         <div class="header-controls">
+          <!-- PWA Install Button -->
+          <button class="pill-btn" id="btn-pwa-install" onclick="triggerPWAInstall()" style="display:none; background:#f97316; color:#ffffff; font-weight:600; border-color:#ea580c;">
+            <span class="material-symbols-outlined" style="font-size:16px;">download</span>
+            <span id="pwa-install-label">ইনস্টল অ্যাপ</span>
+          </button>
+
           <!-- Language Switcher -->
           <button class="pill-btn" id="lang-btn" onclick="toggleLanguage()">
             <span class="material-symbols-outlined" style="font-size:16px;">language</span>
@@ -2543,6 +2566,41 @@
       // Update dynamic live clock every 30 seconds
       setInterval(updateLiveBDDateTime, 30000);
     });
+
+    // PWA Service Worker Registration & Install Prompt
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch((err) => {
+          console.warn('SW register error:', err);
+        });
+      });
+    }
+
+    let deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      const installBtn = document.getElementById('btn-pwa-install');
+      if (installBtn) {
+        installBtn.style.display = 'inline-flex';
+      }
+    });
+
+    function triggerPWAInstall() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('BD Mess installed');
+          }
+          deferredInstallPrompt = null;
+          const installBtn = document.getElementById('btn-pwa-install');
+          if (installBtn) installBtn.style.display = 'none';
+        });
+      } else {
+        alert('অ্যাপটি ফোনে বা পিসিতে ডাউনলোড/ইনস্টল করতে ব্রাউজারের মেনু (থ্রি ডটস) থেকে \"Add to Home screen\" বা \"Install app\" চাপুন।');
+      }
+    }
   </script>
 </body>
 </html>
