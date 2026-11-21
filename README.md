@@ -1,10 +1,14 @@
 # BD Mess - Smart Mess Living & Shared Expense Manager for Android
 
+[![Live Web App](https://img.shields.io/badge/Live_Web_App-bd--mess.pages.dev-success?style=for-the-badge&logo=cloudflare&logoColor=white)](https://bd-mess.pages.dev/) [![Google AI Studio](https://img.shields.io/badge/Google_AI_Studio-App_Live-blue?style=for-the-badge&logo=google&logoColor=white)](https://ai.studio/apps/69fabc28-c6de-4d99-9f95-80e2caa2dfaa)
+
 A specialized Android application engineered for university students, professionals, and bachelor residents in Bangladesh. Built with Kotlin, Jetpack Compose, Material 3, and integrated with the Google Gemini API for automated expense auditing.
 
 ---
 
 ## Project Overview
+
+> 🌐 **Live Web App:** [bd-mess.pages.dev](https://bd-mess.pages.dev/) | 📱 **Google AI Studio:** [Launch AI App](https://ai.studio/apps/69fabc28-c6de-4d99-9f95-80e2caa2dfaa)
 
 Managing shared apartment expenses (commonly known as "bachelor mess" accounting in Bangladesh) involves continuous tracking of daily meals, shared grocery purchases (bazar), house rent, maid allowances, and fluctuating utility bills. 
 
