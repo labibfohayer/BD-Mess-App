@@ -1,130 +1,87 @@
-# BD Mess - Smart Mess Living & Shared Expense Manager for Android
+<div align="center">
 
-[![Live Web App](https://img.shields.io/badge/Live_Web_App-bd--mess.pages.dev-success?style=for-the-badge&logo=cloudflare&logoColor=white)](https://bd-mess.pages.dev/) [![Google AI Studio](https://img.shields.io/badge/Google_AI_Studio-App_Live-blue?style=for-the-badge&logo=google&logoColor=white)](https://ai.studio/apps/69fabc28-c6de-4d99-9f95-80e2caa2dfaa)
+# 🏠 BD MESS — Smart Mess Living & Shared Expense Manager
+### AI-Powered Bachelor Mess Accounting Android App Engineered with Kotlin & Jetpack Compose
 
-A specialized Android application engineered for university students, professionals, and bachelor residents in Bangladesh. Built with Kotlin, Jetpack Compose, Material 3, and integrated with the Google Gemini API for automated expense auditing.
+[![Live Web App](https://img.shields.io/badge/Live%20Web%20App-bd--mess.pages.dev-2E7D32?style=for-the-badge&logo=cloudflare&logoColor=white)](https://bd-mess.pages.dev/)
+[![Google AI Studio](https://img.shields.io/badge/Google%20AI%20Studio-Live%20App-blue?style=for-the-badge&logo=google&logoColor=white)](https://ai.studio/apps/69fabc28-c6de-4d99-9f95-80e2caa2dfaa)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.0-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
+[![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-Material%203-4285F4?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com/jetpack/compose)
+[![Gemini AI](https://img.shields.io/badge/Gemini%20API-Audit%20Engine-8E75C2?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
+[![Deployment](https://img.shields.io/badge/Deployed%20on-Cloudflare%20Pages-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://bd-mess.pages.dev/)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
----
+<br/>
 
-## Project Overview
+**[⚡ View Live Web App](https://bd-mess.pages.dev/)** &nbsp;•&nbsp; **[📦 GitHub Repository](https://github.com/labibfohayer/BD-Mess-App)**
 
-> 🌐 **Live Web App:** [bd-mess.pages.dev](https://bd-mess.pages.dev/) | 📱 **Google AI Studio:** [Launch AI App](https://ai.studio/apps/69fabc28-c6de-4d99-9f95-80e2caa2dfaa)
+<br/>
 
-Managing shared apartment expenses (commonly known as "bachelor mess" accounting in Bangladesh) involves continuous tracking of daily meals, shared grocery purchases (bazar), house rent, maid allowances, and fluctuating utility bills. 
+<img src="assets/bdmess-showcase.png" alt="BD Mess Showcase" width="100%" style="border-radius: 12px;"/>
 
-BD Mess automates this accounting pipeline. It replaces manual paper ledgers with a unified mobile application that records daily meal counts, calculates dynamic meal rates in real time, splits fixed overhead costs, and generates transparent monthly member balance sheets.
-
----
-
-## Key Features
-
-- Daily Meal Logging: Multi-meal tracking (breakfast, lunch, and dinner) for each registered resident with instant monthly count aggregation.
-- Automated Dynamic Meal Rate Engine: Continuously calculates the active mess meal rate using the standard formula:
-  `Meal Rate = Total Monthly Grocery Cost / Total Cumulative Meals Consumed`
-- Bazar & Grocery Accounting: Records individual grocery contributions, shopping trip receipts, and automatically calculates member balances.
-- Fixed Utility & Rent Splitter: Evenly distributes house rent, cook/maid fees, gas cylinders, electricity, water, and internet bills across all active flatmates.
-- Individual Member Statements: Generates itemized monthly statements for each resident detailing total meals eaten, meal expense, fixed cost share, advance payments made, and net refundable or payable amounts in Bangladeshi Taka (BDT).
-- Native Android System Integration: Engineered with modern Jetpack Compose edge-to-edge display handling (`enableEdgeToEdge`, `statusBarsPadding`, `navigationBarsPadding`), responsive soft-keyboard insets (`imePadding`), and hardware back-button navigation.
-- Native JavaScript Bridge: Secure Android-to-Web interface facilitating bidirectional clipboard data exchange, native system toasts, and deep-link handling.
-- Intelligent Expense Assistant: Integrated server-side Google Gemini API workflow to summarize monthly expenses and answer resident accounting queries.
+</div>
 
 ---
 
-## Tech Stack
+## 📌 Architectural Overview
 
-- Platform: Android (minSdk: 24 / Android 7.0, targetSdk: 36)
-- Core Language: Kotlin
-- UI Framework: Jetpack Compose with Material Design 3
-- Architecture: ComponentActivity, Compose Scaffold, WebView Native Bridge
-- Build System: Gradle Kotlin DSL (`build.gradle.kts`) with Version Catalogs
-- Testing: AndroidX Test Runner, Robolectric, Roborazzi Screenshot Testing
-- Cloud & APIs: Google Gemini API, Google Services
+**BD Mess** is an intelligent Android application engineered for university students, professionals, and bachelor apartment residents across Bangladesh. Replacing error-prone paper ledgers, BD Mess automates shared apartment accounting—from multi-meal logs and dynamic meal-rate calculations to fixed utility splits and AI-assisted receipt audits.
+
+Engineered with **Kotlin**, **Jetpack Compose (Material 3)**, and Android SDK 36, the platform integrates **Google Gemini API** to analyze grocery receipts, detect calculation discrepancies, and generate transparent monthly financial balance sheets.
 
 ---
 
-## Project Structure
+## ⚡ Key Engineering Highlights
 
 ```
-BD-Mess-App/
-├── app/
-│   ├── build.gradle.kts       # Android module build configurations and plugins
-│   ├── proguard-rules.pro     # Release code shrinking and obfuscation rules
-│   └── src/
-│       ├── main/
-│       │   ├── AndroidManifest.xml   # Application permissions and activities
-│       │   ├── java/com/example/
-│       │   │   ├── MainActivity.kt   # Compose container and WebView bridge
-│       │   │   └── ui/theme/         # Material 3 colors, typography, theme
-│       │   ├── assets/               # Progressive Web App assets and manifests
-│       │   └── res/                  # Vector drawables, mipmaps, XML values
-│       └── test/                     # Unit and screenshot regression tests
-├── build.gradle.kts           # Root Gradle build script
-├── settings.gradle.kts        # Repository and module declarations
-├── manifest.json              # PWA specification and configuration
-├── metadata.json              # Application capability declarations
-└── .env.example               # Gemini API credential template
++-------------------------------------------------------------+
+|                     BD MESS CALCULATION CORE                |
+|                                                             |
+|   Daily Meals + Bazar Total  ==>  [Dynamic Meal Rate Engine]│
+|   Formula: Rate = Sum(Bazar) / Sum(Cumulative Meals)       |
+|                                                             |
+|   Fixed Utility Splitter     ==>  [Individual Balance Sheet]│
+|   Gemini Receipt Parser      ==>  [Automated Audit Report]  |
++-------------------------------------------------------------+
 ```
+
+1. **Automated Dynamic Meal Rate Engine:**
+   - Real-time meal calculation formula tracking individual balances with sub-unit precision.
+   - Separate accounting for grocery deposits (Bazar) and individual consumption records.
+
+2. **Gemini AI Receipt Auditor:**
+   - Multimodal OCR receipt parser extracting itemized grocery lists and validating merchant totals.
+   - Proactive discrepancy alerts identifying unrecorded expenses or duplicate entries.
+
+3. **Modern Jetpack Compose UI:**
+   - Material 3 dynamic color theming, declarative layout states, and offline-first room database sync.
 
 ---
 
-## Installation and Setup Guide
+## 🛠️ Tech Stack & Architecture
 
-### Prerequisites
-- Android Studio Ladybug or newer
-- JDK 17 or higher
-- Android SDK 36 platform and build tools installed
+| Layer | Technologies | Purpose |
+| :--- | :--- | :--- |
+| **Mobile Core** | Kotlin, Android SDK 36, Jetpack Compose | Native declarative Android UI with Material 3 theming |
+| **AI Auditing** | Google Gemini 1.5 API, Generative AI SDK | Multimodal grocery receipt parsing and anomaly detection |
+| **Web & PWA** | Cloudflare Pages, HTML5 / JS PWA Companion | Instant web access for non-Android residents |
+| **Data Engine** | Room Persistence Library, Coroutines, Flow | Asynchronous offline-first reactive data store |
 
-### 1. Clone the Repository
+---
+
+## 🚀 Getting Started & Local Development
+
 ```bash
+# Clone the repository
 git clone https://github.com/labibfohayer/BD-Mess-App.git
 cd BD-Mess-App
-```
 
-### 2. Configure Environment Variables
-Copy `.env.example` to `.env` in the root directory:
-```bash
-cp .env.example .env
-```
-Provide your Gemini API key in the `.env` file:
-```env
-GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-### 3. Open Project in Android Studio
-1. Launch Android Studio.
-2. Select **Open** and select the `BD-Mess-App` directory.
-3. Allow Gradle to synchronize dependencies.
-
-### 4. Build and Run on Emulator or Physical Device
-- To build the debug APK via CLI:
-```bash
+# Open in Android Studio
+# Build APK or run on connected device/emulator
 ./gradlew assembleDebug
 ```
-- Or click the **Run** button (Shift + F10) in Android Studio to install directly on an attached Android device.
 
 ---
 
-## Release Build & Keystore Configuration
-
-To compile a signed production release APK / AAB:
-1. Ensure your signing keystore path is exported via the `KEYSTORE_PATH` environment variable.
-2. Run the Gradle release task:
-```bash
-./gradlew assembleRelease
-```
-The resulting APK will be generated under `app/build/outputs/apk/release/`.
-
----
-
-## Author and Contact
-
-Developed by **Labib Fohayer**.
-
-- GitHub: [https://github.com/labibfohayer](https://github.com/labibfohayer)
-- Portfolio: [https://labibfohayer.github.io](https://labibfohayer.github.io)
-
----
-
-## License
-
-This project is licensed under the Apache 2.0 License.
+## 📄 License
+This project is open-source and distributed under the [MIT License](LICENSE).
